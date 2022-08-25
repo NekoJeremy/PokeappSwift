@@ -15,8 +15,13 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
+    
+    private var viewModel : ViewModel = ViewModel()
 
     var body: some View {
+        Button("api pokemons") {
+            viewModel.executeAPI()
+        }
         NavigationView {
             List {
                 ForEach(items) { item in
@@ -41,6 +46,7 @@ struct ContentView: View {
                 }
             }
             Text("Select an item")
+            
         }
     }
 

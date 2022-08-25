@@ -8,22 +8,47 @@
 import Foundation
 import SwiftUI
 
-struct PokemonModel : Decodable {
+struct PokemonDataModel : Decodable {
     let next: String
     let previous: String
     let name: String
     let url: String
 }
 
-struct PokemonDataModel : Decodable {
-    let pokemons : [PokemonModel]
+struct PokemonResponseDataModel : Decodable {
+    let pokemons : [PokemonDataModel]
+}
 
-    let CodingKeys: String, Key {
+final class ViewModel {
+    func executeAPI() {
+        let urlSession = URLSession.shared
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20&amp;offset=0")!
+        
+        urlSession.dataTask(with: url) { data, response, error in
+            print("data --> ", data)
+            print("response -> ", response)
+            print("error -> ", error)
+            if let data = data {
+                let jsonPokemon = try? JSONSerialization.jsonObject(with: data)
+                print(jsonPokemon)
+            }
+        }.resume()
+    }
+    
+}
+
+
+
+
+/*struct PokemonDataModel : Decodable {
+    let pokemons : [PokemonModel]
+    
+    let CodingKeys = String, CodingKey {
         case results
     }
 
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let container = try decoder.container(keyedBy: CodingKey.self)
         self.pokemons = try container.decode([PokemonModel].self, forKey: results)
     }
 }
@@ -48,4 +73,4 @@ final class ViewModel {
         }.resume()
             
     }
-}
+}*/
