@@ -9,19 +9,33 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+/*    @Environment(\.managedObjectContext) private var viewContext
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
     
-    private var viewModel : ViewModel = ViewModel()
+ */
+    @StateObject var viewModel : ViewModel = ViewModel()
 
     var body: some View {
+        /*
         Button("api pokemons") {
-            viewModel.executeAPI()
+            viewModel.getPokemons()
+        }*/
+        NavigationView {
+            Text("pokemon")
+            Form {
+                ForEach(viewModel.pokemons, id: \.name) { pokemon in
+                    Text(pokemon.name)
+                }
+            }
+        }.onAppear {
+            viewModel.getPokemons()
         }
+    }
+        /*
         NavigationView {
             List {
                 ForEach(items) { item in
@@ -88,9 +102,11 @@ private let itemFormatter: DateFormatter = {
     formatter.timeStyle = .medium
     return formatter
 }()
-
+         */
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
+}
+
 }

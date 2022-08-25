@@ -9,32 +9,44 @@ import Foundation
 import SwiftUI
 
 struct PokemonDataModel : Decodable {
-    let next: String
-    let previous: String
     let name: String
     let url: String
 }
 
 struct PokemonResponseDataModel : Decodable {
     let pokemons : [PokemonDataModel]
+    
+    enum CodingKeys : String, CodingKey {
+        case results
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.pokemons = try container.decode([PokemonDataModel].self, forKey: .results)
+        print(pokemons)
+    }
 }
 
-final class ViewModel {
-    func executeAPI() {
+final class ViewModel : ObservableObject {
+    
+    @Published var pokemons : [PokemonDataModel] = []
+    
+    func getPokemons() {
         let urlSession = URLSession.shared
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20&amp;offset=0")!
         
         urlSession.dataTask(with: url) { data, response, error in
-            print("data --> ", data)
-            print("response -> ", response)
-            print("error -> ", error)
             if let data = data {
-                let jsonPokemon = try? JSONSerialization.jsonObject(with: data)
-                print(jsonPokemon)
+                let pokemonDataModel = try! JSONDecoder().decode(PokemonResponseDataModel.self, from: data)
+                //print(pokemonDataModel)
+                DispatchQueue.main.async {
+                    self.pokemons = pokemonDataModel.pokemons
+                }
             }
         }.resume()
+        
+        //print(pokemons)
     }
-    
 }
 
 
