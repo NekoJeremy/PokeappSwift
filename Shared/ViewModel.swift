@@ -38,14 +38,11 @@ final class ViewModel : ObservableObject {
         urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
                 let pokemonDataModel = try! JSONDecoder().decode(PokemonResponseDataModel.self, from: data)
-                //print(pokemonDataModel)
                 DispatchQueue.main.async {
                     self.pokemons = pokemonDataModel.pokemons
                 }
             }
         }.resume()
-        
-        //print(pokemons)
     }
 }
 
