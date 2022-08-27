@@ -22,7 +22,9 @@ struct ContentView: View {
         NavigationView {
             Form {
                 ForEach(viewModel.pokemons, id: \.name) { pokemon in
-                    Text(pokemon.name)
+                    ZStack {
+                        Text(pokemon.name)
+                    }
                 }
             }
         }.onAppear {
