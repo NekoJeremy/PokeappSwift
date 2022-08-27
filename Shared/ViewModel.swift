@@ -36,8 +36,7 @@ final class ViewModel : ObservableObject {
     
     func getPokemons() {
         let urlSession = URLSession.shared
-        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=/(limit)&amp;offset=/(offset)")!
-        
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit="+limit.codingKey.stringValue+"&amp,;offset="+offset.codingKey.stringValue)!
         urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
                 let pokemonDataModel = try! JSONDecoder().decode(PokemonResponseDataModel.self, from: data)
