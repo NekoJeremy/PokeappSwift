@@ -30,10 +30,13 @@ struct PokemonResponseDataModel : Decodable {
 final class ViewModel : ObservableObject {
     
     @Published var pokemons : [PokemonDataModel] = []
+
+    var limit = 20
+    var offset = 0
     
     func getPokemons() {
         let urlSession = URLSession.shared
-        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20&amp;offset=0")!
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=/(limit)&amp;offset=/(offset)")!
         
         urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
