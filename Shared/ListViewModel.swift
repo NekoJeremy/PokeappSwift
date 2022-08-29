@@ -1,5 +1,5 @@
 //
-//  ViewModel.swift
+//  ListViewModel.swift
 //  Pokeapp
 //
 //  Created by Marco Cordoba on 24-08-22.
@@ -27,25 +27,32 @@ struct PokemonResponseDataModel : Decodable {
     }
 }
 
-final class ViewModel : ObservableObject {
+final class ListViewModel : ObservableObject {
     
     @Published var pokemons : [PokemonDataModel] = []
 
     var limit = 20
     var offset = 0
-    
-    func getPokemons() {
-        let urlSession = URLSession.shared
+    let urlSession = URLSession.shared
+
+    func getPokemonList() {
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit="+limit.codingKey.stringValue+"&amp,;offset="+offset.codingKey.stringValue)!
         urlSession.dataTask(with: url) { data, response, error in
             if let data = data {
                 let pokemonDataModel = try! JSONDecoder().decode(PokemonResponseDataModel.self, from: data)
                 DispatchQueue.main.async {
                     self.pokemons = pokemonDataModel.pokemons
+                    print("species ------- "+[pokemonDataModel].species)
                 }
             }
         }.resume()
     }
+/*
+    func getPokemonDescription() {
+        let index = offset + [pokemonDataModel].species
+        let urlDescription = URL(string: "https://pokeapi.co/api/v2/pokemon-species/"+index)
+    }
+    */
 }
 
 

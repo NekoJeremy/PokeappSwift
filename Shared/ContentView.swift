@@ -16,19 +16,19 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
 
-    @StateObject var viewModel : ViewModel = ViewModel()
+    @StateObject var listViewModel : ListViewModel = ListViewModel()
 
     var body: some View {
         NavigationView {
             Form {
-                ForEach(viewModel.pokemons, id: \.name) { pokemon in
+                ForEach(listViewModel.pokemons, id: \.name) { pokemon in
                     ZStack {
                         Text(pokemon.name)
                     }
                 }
             }
         }.onAppear {
-            viewModel.getPokemons()
+            listViewModel.getPokemons()
         }
     }
 
