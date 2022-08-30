@@ -23,7 +23,9 @@ struct ContentView: View {
             Form {
                 ForEach(listViewModel.pokemons, id: \.name) { pokemon in
                     ZStack {
-                        Text(pokemon.name)
+                        VStack {
+                          Text(pokemon.name)
+                        }
                     }
                 }
             }

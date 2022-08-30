@@ -11,6 +11,17 @@ import SwiftUI
 struct PokemonDataModel : Decodable {
     let name: String
     let url: String
+    let frontDefault: String
+
+    enum CodingKeys : String, CodingKey {
+        case urlDescription : "url"
+    }
+
+    init(from decoder: Decoder) throws {
+        let description = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .urlDescription)
+        print("description is here -------", description)
+        self.frontDefault = try description.decode(String.self, forKey: .urlDescription)
+    }
 }
 
 struct PokemonResponseDataModel : Decodable {
@@ -18,12 +29,17 @@ struct PokemonResponseDataModel : Decodable {
     
     enum CodingKeys : String, CodingKey {
         case results
+        case urlDescription : "url"
+
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.pokemons = try container.decode([PokemonDataModel].self, forKey: .results)
+        let description = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .urlDescription)
+        print("description is here -------", description)
         print(pokemons)
+        self.frontDefault = try 
     }
 }
 
