@@ -108,10 +108,10 @@
 			children = (
 				609ACD8128B6AE0400E873F3 /* PokeappApp.swift */,
 				609ACD8228B6AE0400E873F3 /* ContentView.swift */,
-				609ACDC228B6B41700E873F3 /* ViewModel.swift */,
 				609ACD8328B6AE0400E873F3 /* Persistence.swift */,
 				609ACD8428B6AE0500E873F3 /* Assets.xcassets */,
 				609ACD7F28B6AE0400E873F3 /* Pokeapp.xcdatamodeld */,
+				609ACDC228B6B41700E873F3 /* ViewModel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";

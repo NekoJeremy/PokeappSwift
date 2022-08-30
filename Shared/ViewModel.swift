@@ -1,5 +1,5 @@
 //
-//  ListViewModel.swift
+//  ViewModel.swift
 //  Pokeapp
 //
 //  Created by Marco Cordoba on 24-08-22.
@@ -43,15 +43,15 @@ struct PokemonResponseDataModel : Decodable {
     }
 }
 
-final class ListViewModel : ObservableObject {
+final class ViewModel : ObservableObject {
     
     @Published var pokemons : [PokemonDataModel] = []
 
     var limit = 20
     var offset = 0
-    let urlSession = URLSession.shared
-
-    func getPokemonList() {
+    
+    func getPokemons() {
+        let urlSession = URLSession.shared
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit="+limit.codingKey.stringValue+"&amp,;offset="+offset.codingKey.stringValue)!
         urlSession.dataTask(with: url) { data, response, error in
             if let _ = error {
@@ -64,11 +64,15 @@ final class ListViewModel : ObservableObject {
                 let pokemonDataModel = try JSONDecoder().decode(PokemonResponseDataModel.self, from: data)
                 DispatchQueue.main.async {
                     self.pokemons = pokemonDataModel.pokemons
+<<<<<<< HEAD:Shared/ListViewModel.swift
                     //print("species ------- "+[pokemonDataModel].species)
                 }
+=======
+>>>>>>> parent of fbb5c8f (change viewModel to list):Shared/ViewModel.swift
                 }
         }.resume()
     }
+<<<<<<< HEAD:Shared/ListViewModel.swift
 
     /*
     func getPokemonDescription() {
@@ -76,4 +80,6 @@ final class ListViewModel : ObservableObject {
         let urlDescription = URL(string: "https://pokeapi.co/api/v2/pokemon-species/"+index)
     }
     */
+=======
+>>>>>>> parent of fbb5c8f (change viewModel to list):Shared/ViewModel.swift
 }
