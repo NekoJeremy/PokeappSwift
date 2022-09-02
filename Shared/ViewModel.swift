@@ -11,21 +11,9 @@ import SwiftUI
 struct PokemonDataModel : Decodable {
     let name: String
     let url: String
-    /*let frontDefault: String?
-
-    enum CodingKeys : String, CodingKey {
-        case urlDescription = "url"
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let description = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .urlDescription)
-        print("description is here -------", description)
-        self.frontDefault = try? description.decode(String.self, forKey: .urlDescription)
-    }*/
 }
 
-struct PokemonResponseDataModel : Decodable {
+struct PokemonListDataModel : Decodable {
     let pokemons : [PokemonDataModel]
     
     enum CodingKeys : String, CodingKey {
@@ -36,7 +24,6 @@ struct PokemonResponseDataModel : Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.pokemons = try container.decode([PokemonDataModel].self, forKey: .results)
-        print(pokemons)
     }
 }
 
@@ -48,22 +35,59 @@ final class ViewModel : ObservableObject {
     var offset = 0
     
     func getPokemons() {
+        let urlSession = URLSession.shared
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit="+limit.codingKey.stringValue+"&amp,;offset="+offset.codingKey.stringValue)!
         
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        urlSession.dataTask(with: url) { data, response, error in
             if let _ = error {
-                print("Error en getPokemons")
+                print("Error al obtener el listado de pokemons")
             }
             
             let httpResponse = response as! HTTPURLResponse
             
             if let data = data,
                httpResponse.statusCode == 200 {
-                let pokemonDataModel = try! JSONDecoder().decode(PokemonResponseDataModel.self, from: data)
+                let pokemonDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
+                //let pokemonlist = try!
+                
                 DispatchQueue.main.async {
                     self.pokemons = pokemonDataModel.pokemons
+                    print(pokemonDataModel.pokemons)
+                    
+                    pokemonDataModel.pokemons.forEach() { poke in
+                        print("pokeurl-------------------------", poke.url)
+                        urlSession.dataTask(with: poke.url) { data, response, error in
+                            if let _ = error {
+                                print("Error al obtener el listado de pokemons")
+                            }
+                            
+                            let httpResponse = response as! HTTPURLResponse
+                            
+                            if let data = data,
+                               httpResponse.statusCode == 200 {
+                                print("data pokemon -----",data)
+                                /*let pokemonDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
+                                
+                                DispatchQueue.main.async {
+                                    self.pokemons = pokemonDataModel.pokemons
+                                    print(pokemonDataModel.pokemons)*/
+                        }
+                    }
                 }
-            }
-        }.resume()
+                /*ForEach(pokemonDataModel.pokemons, id: \.name) { pokemon in
+                    
+                urlSession.dataTask(with: PokemonDataModel.init(name: pokemonDataModel.pokemons[1].name, url: pokemonDataModel.pokemons[1].url)) { data, response, error in
+                        if let data = data {
+                            let pokemonDescription = try! JSONDecoder().decode(PokemonDataModel.self, from: data)
+                            print("pokedescription-------------",pokemonDescription)
+                        }
+                    }
+                */}
+            }.resume()
+            
     }
-}
+        }
+    
+    func getPokemonDescription() {
+        //let url = URL
+    }
