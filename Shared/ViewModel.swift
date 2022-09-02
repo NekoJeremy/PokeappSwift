@@ -8,28 +8,82 @@
 import Foundation
 import SwiftUI
 
-struct PokemonDataModel : Decodable {
+//modelo del pokemon individual dentro de la lista
+struct PokemonGenericDataModel : Decodable {
     let name: String
     let url: String
 }
 
-struct PokemonListDataModel : Decodable {
-    let pokemons : [PokemonDataModel]
-    
+struct ContainerGenericDataModel : Decodable {
+    let genericContainerPokemon = [PokemonGenericDataModel] = []
+
     enum CodingKeys : String, CodingKey {
         case results
-
+        case ability
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pokemons = try container.decode([PokemonDataModel].self, forKey: .results)
+
+        self.genericContainerPokemon = try container.decode([PokemonGenericDataModel].self, forKey: .results)
+        self.genericContainerPokemon = try container.decode([PokemonGenericDataModel].self, forKey: .ability)
     }
+
 }
+
+//modelo del pokemon individual y su detalle
+struct PokemonDescriptionDataModel : Decodable {
+    let id : Int
+    let abilities : [ContainerGenericDataModel] = []
+    let baseExperience : Int
+    let forms : [PokemonGenericDataModel] = []
+    let height : Int
+    let weight : Int
+    let moves : [
+        let move : PokemonGenericDataModel
+        let versionGroupDetails : [
+            let levelLearnedAt : Int
+            let moveLearnMethod : PokemonGenericDataModel
+            let versionGroup : PokemonGenericDataModel 
+        ]
+    ]
+    let name : String
+    let order : Int
+    let species : PokemonGenericDataModel
+    let sprites : {
+        let backDefault 
+        let backFemale
+        let backShiny
+        let backShinyFemale
+        let frontDefault
+        let frontFemale
+        let frontShiny
+        let frontShinyFemale
+        let other : {
+            let dream_world : sprites
+            let home : sprites
+            let officialArtwork : sprites
+        }
+    }
+    let stats : [GenericStat]
+    let type : [TypesDataModel]
+}   
+
+struct TypesDataModel : Decodable {
+    let slot : Int
+    let type : PokemonGenericDataModel
+}
+
+struct GenericStat : Decodable {
+    let baseStat : Int
+    let effort : Int
+    let stat : PokemonGenericDataModel
+}
+
 
 final class ViewModel : ObservableObject {
     
-    @Published var pokemons : [PokemonDataModel] = []
+    @Published var pokemons : [PokemonGenericDataModel] = []
 
     var limit = 20
     var offset = 0
@@ -47,14 +101,13 @@ final class ViewModel : ObservableObject {
             
             if let data = data,
                httpResponse.statusCode == 200 {
-                let pokemonDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
-                //let pokemonlist = try!
+                let PokemonGenericDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
                 
                 DispatchQueue.main.async {
-                    self.pokemons = pokemonDataModel.pokemons
-                    print(pokemonDataModel.pokemons)
+                    self.pokemons = PokemonGenericDataModel.pokemons
+                    print(PokemonGenericDataModel.pokemons)
                     
-                    pokemonDataModel.pokemons.forEach() { poke in
+                    PokemonGenericDataModel.pokemons.forEach() { poke in
                         print("pokeurl-------------------------", poke.url)
                         urlSession.dataTask(with: poke.url) { data, response, error in
                             if let _ = error {
@@ -66,25 +119,16 @@ final class ViewModel : ObservableObject {
                             if let data = data,
                                httpResponse.statusCode == 200 {
                                 print("data pokemon -----",data)
-                                /*let pokemonDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
+                                let PokemonGenericDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
                                 
                                 DispatchQueue.main.async {
-                                    self.pokemons = pokemonDataModel.pokemons
-                                    print(pokemonDataModel.pokemons)*/
+                                    self.pokemons = PokemonGenericDataModel.pokemons
+                                    print(PokemonGenericDataModel.pokemons)
                         }
                     }
                 }
-                /*ForEach(pokemonDataModel.pokemons, id: \.name) { pokemon in
-                    
-                urlSession.dataTask(with: PokemonDataModel.init(name: pokemonDataModel.pokemons[1].name, url: pokemonDataModel.pokemons[1].url)) { data, response, error in
-                        if let data = data {
-                            let pokemonDescription = try! JSONDecoder().decode(PokemonDataModel.self, from: data)
-                            print("pokedescription-------------",pokemonDescription)
-                        }
-                    }
-                */}
-            }.resume()
-            
+            }
+        }.resume()       
     }
         }
     
