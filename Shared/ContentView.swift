@@ -24,7 +24,7 @@ struct ContentView: View {
                     
                     ZStack {
                         VStack {
-                            Text(pokemon.name)
+                            Text(pokemon.name!)
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.top, 4)
