@@ -24,7 +24,7 @@ struct ContentView: View {
                     
                     ZStack {
                         VStack {
-                            Text(pokemon.name!)
+                            Text(pokemon.name)
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(.top, 4)
@@ -34,10 +34,9 @@ struct ContentView: View {
                 }
         }.onAppear {
             viewModel.getPokemons()
-        }
-        /*}.onTapGesture {
+        }.onTapGesture {
             viewModel.getPokemonDescription()
-        }*/
+        }
     }
 
     private func addItem() {

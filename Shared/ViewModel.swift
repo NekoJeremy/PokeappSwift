@@ -10,8 +10,8 @@ import SwiftUI
 
 //modelo del pokemon individual dentro de la lista
 struct PokemonGenericDataModel : Decodable {
-    let name: String?
-    let url: String?
+    let name: String
+    let url: String
 }
 
 struct ContainerGenericDataModel : Decodable {
@@ -186,7 +186,9 @@ final class ViewModel : ObservableObject {
                 DispatchQueue.main.async {
                     self.pokemons = PokemonGenericDataModel.genericContainerPokemon
                     print(PokemonGenericDataModel.genericContainerPokemon)
-                    
+                    self.pokemons.forEach() { poke in
+                        print("pokeUrl ----------",poke.url)
+                    }
                     /*
                     self.pokemons.forEach() { poke in
                         urlSession.dataTask(with: poke.url) { data, response, error in
@@ -218,6 +220,18 @@ final class ViewModel : ObservableObject {
                 }
             }
         }.resume()       
+    }
+    
+    func getPokemonDescription() {
+        self.pokemons.forEach() { poke in
+            let urlDescrip = URL(string: poke.url)
+            URLSession.shared.dataTask(with: urlDescrip!) { data, resume, error in
+                if data == data {
+                    print("aqui esta la data -----", data)
+                }
+                
+            }
+        }
     }
 }
     
