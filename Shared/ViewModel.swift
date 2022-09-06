@@ -30,13 +30,13 @@ final class ViewModel : ObservableObject {
             
             if let data = data,
                httpResponse.statusCode == 200 {
-                let PokemonGenericDataModel = try! JSONDecoder().decode(ContainerGenericDataModel.self, from: data)
+                let PokemonGenericDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
                 
                 DispatchQueue.main.async {
                     self.pokemons = PokemonGenericDataModel.genericContainerPokemon
                     //print(PokemonGenericDataModel.genericContainerPokemon)
                     self.pokemons.forEach() { poke in
-                        print("pokeUrl ----------",poke.url)
+                        
                     }
                     /*
                     self.pokemons.forEach() { poke in
