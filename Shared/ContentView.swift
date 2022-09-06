@@ -20,6 +20,7 @@ struct ContentView: View {
 
     var body: some View {
         NavigationView {
+            Form {
                 ForEach(viewModel.pokemons, id: \.name) { pokemon in
                     
                     ZStack {
@@ -32,10 +33,12 @@ struct ContentView: View {
                         }
                     }.background(Color.cyan).padding()
                 }
+            }
         }.onAppear {
             viewModel.getPokemons()
-        }.onTapGesture {
             viewModel.getPokemonDescription()
+        }.onTapGesture {
+            //viewModel.getPokemonDescription()
         }
     }
 
