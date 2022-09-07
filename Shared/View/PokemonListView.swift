@@ -13,25 +13,11 @@ struct PokemonListView: View {
     
     var body: some View {
         NavigationView {
-            Form {
-                ForEach(viewModel.pokemons, id: \.name) { pokemon in
-                    
-                    ZStack {
-                        VStack {
-                            Text(pokemon.name)
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding(.top, 4)
-                                .padding(.leading)
-                        }
-                    }.background(Color.cyan).padding()
+            ScrollView {
+                ForEach(0..<19) { _ in
+                    PokemonCardView()
                 }
             }
-        }.onAppear {
-            viewModel.getPokemons()
-            viewModel.getPokemonDescription()
-        }.onTapGesture {
-            //viewModel.getPokemonDescription()
         }
     }
 }
