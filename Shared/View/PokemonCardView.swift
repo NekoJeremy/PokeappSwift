@@ -10,11 +10,10 @@ import SwiftUI
 struct PokemonCardView: View {
     var body: some View {
         ZStack {
-            VStack {
-                Text("pokemon.name")
+            VStack(alignment: .leading) {                Text("pokemon.name")
                     .font(.headline)
                     .foregroundColor(.white)
-                    .padding(.top, 4)
+                    .padding(.top, 8)
                     .padding(.leading)
                 HStack {
                     Text("pokemon.type")
@@ -26,9 +25,16 @@ struct PokemonCardView: View {
                         RoundedRectangle(cornerRadius: 20)                            .fill(Color.white.opacity(0.25))
                         )
                         .frame(width: 100, height: 24, alignment: .leading)
+                    Image("")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 68, height: 68)
+                        .padding([.bottom, .trailing], 4)
                 }
             }
-        }.background(Color.cyan).padding()
+        }
+        .background(Color.cyan)
+        .cornerRadius(12)
     }
 }
 
