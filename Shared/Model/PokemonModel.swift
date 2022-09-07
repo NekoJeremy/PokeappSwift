@@ -7,13 +7,21 @@
 
 import Foundation
 
+struct PokemonBasicDataModel : Decodable {
+    let name : String
+    let url : String
+}
+
 struct PokemonDataModel : Decodable {
+    var id = UUID()
     let name: String
     let url: String
+    let type: String
+    let image: String
 }
 
 struct PokemonListDataModel : Decodable {
-    var genericContainerPokemon : [PokemonDataModel] = []
+    var genericContainerPokemon : [PokemonBasicDataModel] = []
 
     enum CodingKeys : String, CodingKey {
         case results
@@ -22,7 +30,7 @@ struct PokemonListDataModel : Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.genericContainerPokemon = try! container.decode([PokemonDataModel].self, forKey: .results)
+        self.genericContainerPokemon = try! container.decode([PokemonBasicDataModel].self, forKey: .results)
     }
 
 }
