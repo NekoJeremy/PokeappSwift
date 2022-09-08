@@ -7,16 +7,17 @@
 
 import Foundation
 
-final class ViewModel : ObservableObject {
+final class PokemonViewModel : ObservableObject {
     
-    @Published var pokemons : [PokemonDataModel] = []
+    @Published var pokemons = [PokemonDataModel]()
 
-    var limit = 20
-    var offset = 0
+    let limit = 20
+    let offset = 0
     
-    func getPokemons() {
+    func getPokemons() async {
+        
         let urlSession = URLSession.shared
-        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit="+limit.codingKey.stringValue+"&amp,;offset="+offset.codingKey.stringValue)!
+        let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&amp,;offset=\(offset)")!
         
         urlSession.dataTask(with: url) { data, response, error in
             if let _ = error {
@@ -31,38 +32,10 @@ final class ViewModel : ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.pokemons = PokemonGenericDataModel.genericContainerPokemon
-                    //print(PokemonGenericDataModel.genericContainerPokemon)
+                    print("self.pokemons -------- ", self.pokemons)
+                    /*print(PokemonGenericDataModel.genericContainerPokemon)
                     self.pokemons.forEach() { poke in
                         print("pokeUrl ----------",poke)
-                    }
-                    /*
-                    self.pokemons.forEach() { poke in
-                        urlSession.dataTask(with: poke.url) { data, response, error in
-                            if data = data {
-                                print("this is the data ----------", data)
-                            }
-                        }
-                    }*/
-                    
-                    /*
-                     PokemonGenericDataModel.pokemons.forEach() { poke in
-                        print("pokeurl-------------------------", poke.url)
-                        urlSession.dataTask(with: poke.url) { data, response, error in
-                            if let _ = error {
-                                print("Error al obtener el listado de pokemons")
-                            }
-                            
-                            let httpResponse = response as! HTTPURLResponse
-                            
-                            if let data = data,
-                               httpResponse.statusCode == 200 {
-                                print("data pokemon -----",data)
-                                let PokemonGenericDataModel = try! JSONDecoder().decode(PokemonListDataModel.self, from: data)
-                                
-                                DispatchQueue.main.async {
-                                    self.pokemons = PokemonGenericDataModel.pokemons
-                                    print(PokemonGenericDataModel.pokemons)
-                        }
                     }*/
                 }
             }

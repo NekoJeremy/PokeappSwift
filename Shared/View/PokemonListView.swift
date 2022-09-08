@@ -10,16 +10,28 @@ import SwiftUI
 struct PokemonListView: View {
     private let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
     
+    @StateObject var viewModel = PokemonViewModel()
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
-                    ForEach(0..<19) { _ in
-                        PokemonCardView()
+                    ForEach(viewModel.pokemons) { pokemon in
+                        PokemonCardView(pokemon: pokemon, viewModel: viewModel)
                     }
+                    
+                    /*ForEach(viewModel.pokemons) { pokemon in
+                        PokemonCardView(pokemon: pokemon, viewModel: viewModel)
+                    }*/
                 }
             }
-        }.navigationTitle("Pokedex")
+        }
+        .navigationTitle("Pokedex")
+        .onAppear {
+            Task {
+                await viewModel.getPokemons()
+            }
+        }
     }
 }
 
