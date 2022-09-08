@@ -9,7 +9,7 @@ import Foundation
 
 final class PokemonViewModel : ObservableObject {
     
-    @Published var pokemons = [PokemonDataModel]()
+    @Published var pokemons = [PokemonBasicDataModel]()
 
     let limit = 20
     let offset = 0
@@ -32,24 +32,19 @@ final class PokemonViewModel : ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.pokemons = PokemonGenericDataModel.genericContainerPokemon
-                    print("self.pokemons -------- ", self.pokemons)
-                    /*print(PokemonGenericDataModel.genericContainerPokemon)
-                    self.pokemons.forEach() { poke in
-                        print("pokeUrl ----------",poke)
-                    }*/
+                    await getPokemonDescription()
                 }
             }
         }.resume()
     }
     
-    func getPokemonDescription() {
+    func getPokemonDescription() async {
         self.pokemons.forEach() { poke in
             let urlDescrip = URL(string: poke.url)
             URLSession.shared.dataTask(with: urlDescrip!) { data, resume, error in
                 if data == data {
                     print("aqui esta la data -----", data!)
                 }
-                
             }
         }
     }

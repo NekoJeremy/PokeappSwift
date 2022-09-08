@@ -19,10 +19,6 @@ struct PokemonListView: View {
                     ForEach(viewModel.pokemons) { pokemon in
                         PokemonCardView(pokemon: pokemon, viewModel: viewModel)
                     }
-                    
-                    /*ForEach(viewModel.pokemons) { pokemon in
-                        PokemonCardView(pokemon: pokemon, viewModel: viewModel)
-                    }*/
                 }
             }
         }

@@ -37,7 +37,7 @@ struct PokemonDataModel : Decodable {
 }
 
 struct PokemonListDataModel : Decodable {
-    var genericContainerPokemon : [PokemonDataModel] = []
+    var genericContainerPokemon : [PokemonBasicDataModel] = []
 
     enum CodingKeys : String, CodingKey {
         case results
@@ -46,7 +46,7 @@ struct PokemonListDataModel : Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        self.genericContainerPokemon = try! container.decode([PokemonDataModel].self, forKey: .results)
+        self.genericContainerPokemon = try! container.decode([PokemonBasicDataModel].self, forKey: .results)
     }
 
 }
@@ -129,7 +129,7 @@ struct PokemonDescriptionDataModel : Decodable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
-        //self.abilities = try container.decode([ContainerGenericDataModel].self, forKey: .abilities)
+        self.abilities = try container.decode(AbilitiesDataModel.self, forKey: .abilities)
         self.baseExperience = try container.decode(Int.self, forKey: .baseExperience)
         self.forms = try container.decode([PokemonDataModel].self, forKey: .forms)
         self.height = try container.decode(Int.self, forKey: .height)
