@@ -97,7 +97,7 @@ struct VersionGroupDetailsViewModel : Decodable {
 //modelo del pokemon individual y su detalle
 struct PokemonDescriptionDataModel : Decodable {
     let id : Int?
-    var abilities : [AbilitiesDataModel]? = []
+    var abilities : AbilitiesDataModel?
     let baseExperience : Int?
     var forms : [PokemonDataModel]? = []
     let height : Int?

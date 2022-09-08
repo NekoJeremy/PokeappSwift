@@ -9,10 +9,10 @@ import SwiftUI
 
 struct PokemonCardView: View {
         
-    let pokemon: PokemonDataModel
+    let pokemon: PokemonBasicDataModel
     let viewModel: PokemonViewModel
     
-    init(pokemon: PokemonDataModel, viewModel: PokemonViewModel) {
+    init(pokemon: PokemonBasicDataModel, viewModel: PokemonViewModel) {
         self.pokemon = pokemon
         self.viewModel = viewModel
     }
@@ -26,7 +26,7 @@ struct PokemonCardView: View {
                     .padding(.top, 8)
                     .padding(.leading)
                 HStack {
-                    Text(pokemon.type)
+                    Text(pokemon.name)
                         .foregroundColor(.white)
                         .font(.subheadline).bold()
                         .padding(.horizontal, 16)

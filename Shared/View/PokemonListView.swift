@@ -12,21 +12,24 @@ struct PokemonListView: View {
     
     @StateObject var viewModel = PokemonViewModel()
     
+    
+    //var pokemons : [PokemonBasicDataModel] = PokemonViewModel.pokemons
+    
     var body: some View {
         NavigationView {
+            //Text(viewModel.pokemons[1].name)
+            /*
             ScrollView {
                 LazyVGrid(columns: gridItems, spacing: 16) {
-                    ForEach(viewModel.pokemons) { pokemon in
+                    /*ForEach(pokemons) { pokemon in
                         PokemonCardView(pokemon: pokemon, viewModel: viewModel)
-                    }
+                    }*/
                 }
-            }
+            }*/
         }
-        .navigationTitle("Pokedex")
+        //.navigationTitle("Pokedex")
         .onAppear {
-            Task {
-                await viewModel.getPokemons()
-            }
+            viewModel.getPokemons()
         }
     }
 }

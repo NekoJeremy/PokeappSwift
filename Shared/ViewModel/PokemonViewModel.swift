@@ -9,12 +9,12 @@ import Foundation
 
 final class PokemonViewModel : ObservableObject {
     
-    @Published var pokemons = [PokemonBasicDataModel]()
+    @Published var pokemons : [PokemonBasicDataModel] = []
 
     let limit = 20
     let offset = 0
     
-    func getPokemons() async {
+    func getPokemons() {
         
         let urlSession = URLSession.shared
         let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&amp,;offset=\(offset)")!
@@ -32,20 +32,20 @@ final class PokemonViewModel : ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.pokemons = PokemonGenericDataModel.genericContainerPokemon
-                    await getPokemonDescription()
+                    self.getPokemonDescription()
                 }
             }
         }.resume()
     }
     
-    func getPokemonDescription() async {
+    func getPokemonDescription() {
         self.pokemons.forEach() { poke in
             let urlDescrip = URL(string: poke.url)
             URLSession.shared.dataTask(with: urlDescrip!) { data, resume, error in
-                if data == data {
-                    print("aqui esta la data -----", data!)
-                }
-            }
+                
+                /*let pokemonDetail = try! JSONDecoder().decode(PokemonDescriptionDataModel.self, from: data!)
+                print("pokemon detail ------", pokemonDetail)*/
+            }.resume()
         }
     }
 }

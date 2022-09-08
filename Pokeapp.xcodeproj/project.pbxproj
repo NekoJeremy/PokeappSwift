@@ -25,8 +25,6 @@
 		609ACDB128B6AE0500E873F3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609ACD8328B6AE0400E873F3 /* Persistence.swift */; };
 		609ACDB228B6AE0500E873F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 609ACD8428B6AE0500E873F3 /* Assets.xcassets */; };
 		609ACDB328B6AE0500E873F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 609ACD8428B6AE0500E873F3 /* Assets.xcassets */; };
-		609ACDC328B6B41700E873F3 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609ACDC228B6B41700E873F3 /* ViewModel.swift */; };
-		609ACDC428B6B41700E873F3 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609ACDC228B6B41700E873F3 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +63,6 @@
 		609ACDA228B6AE0500E873F3 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		609ACDA628B6AE0500E873F3 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		609ACDA828B6AE0500E873F3 /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
-		609ACDC228B6B41700E873F3 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +141,6 @@
 				60331CEE28C7CB540097441B /* Model */,
 				609ACD8128B6AE0400E873F3 /* PokeappApp.swift */,
 				609ACD8228B6AE0400E873F3 /* ContentView.swift */,
-				609ACDC228B6B41700E873F3 /* ViewModel.swift */,
 				609ACD8328B6AE0400E873F3 /* Persistence.swift */,
 				609ACD8428B6AE0500E873F3 /* Assets.xcassets */,
 				609ACD7F28B6AE0400E873F3 /* Pokeapp.xcdatamodeld */,
@@ -348,7 +344,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60331CF728C7F5F10097441B /* PokemonCardView.swift in Sources */,
-				609ACDC328B6B41700E873F3 /* ViewModel.swift in Sources */,
 				60331CF228C7CC470097441B /* PokemonModel.swift in Sources */,
 				609ACDAC28B6AE0500E873F3 /* PokeappApp.swift in Sources */,
 				609ACDB028B6AE0500E873F3 /* Persistence.swift in Sources */,
@@ -363,7 +358,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				609ACDC428B6B41700E873F3 /* ViewModel.swift in Sources */,
 				609ACDAD28B6AE0500E873F3 /* PokeappApp.swift in Sources */,
 				609ACDB128B6AE0500E873F3 /* Persistence.swift in Sources */,
 				609ACDAB28B6AE0500E873F3 /* Pokeapp.xcdatamodeld in Sources */,
